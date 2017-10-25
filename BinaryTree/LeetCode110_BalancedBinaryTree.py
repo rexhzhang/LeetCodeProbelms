@@ -19,6 +19,8 @@ class Solution(object):
         :type root: TreeNode
         :rtype: bool
         """
+        # O(n^2) worst case Time Complexity
+        # O(n) stack space
         if not root: return True
         left = self.depth(root.left)
         right = self.depth(root.right)
@@ -27,3 +29,14 @@ class Solution(object):
     def depth(self, root):
         if not root: return 0
         return max(self.depth(root.left), self.depth(root.right)) + 1
+
+
+    def isBalanced2(self, root):
+        def helper(node):
+            if node is None: return 0
+            L = self.isBalanced2(node.left)
+            if L == -1: return -1
+            R = self.isBalanced2(node.right)
+            if R == -1: return -1
+            return max(L, R) + 1 if abs(L-R) <= 1 else -1
+        return helper(root) == -1
