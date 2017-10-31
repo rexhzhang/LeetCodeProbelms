@@ -15,10 +15,6 @@ class Solution(object):
         :type nums: List[int]
         :rtype: void Do not return anything, modify nums in-place instead.
         """
-        if nums is None: return None
-        if len(nums) <= 1:
-            return nums
-
         index = 0
         for i in range(len(nums)):
             if nums[i] != 0:
@@ -29,7 +25,4 @@ class Solution(object):
             nums[index] = 0
             index += 1
 
-        return nums
 
-obj = Solution()
-print(obj.moveZeroes([0, 1, 0, 3, 12]))
