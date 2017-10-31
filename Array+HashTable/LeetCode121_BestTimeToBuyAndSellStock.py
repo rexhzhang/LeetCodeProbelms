@@ -15,25 +15,19 @@ Output: 0
 In this case, no transaction is done, i.e. max profit = 0.
 """
 
-class Solution(object):
+
+class Solution:
     def maxProfit(self, prices):
         """
         :type prices: List[int]
         :rtype: int
         """
-
-        if  prices  is None or len(prices) == 0:
-            return 0
-
+        if prices is None or len(prices) == 0: return 0
         currentMin = prices[0]
         maxProfit = 0
 
-        for price in prices:
-            if price < currentMin:
-                currentMin = price
-            else:
-                if price - currentMin > maxProfit:
-                    maxProfit = price - currentMin
-
+        for i in range(1, len(prices)):
+            currentMin = min(currentMin, prices[i])
+            maxProfit = max(maxProfit, prices[i] - currentMin)
 
         return maxProfit
