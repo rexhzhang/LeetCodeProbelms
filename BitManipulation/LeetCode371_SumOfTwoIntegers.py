@@ -13,3 +13,5 @@ class Solution:
         :type b: int
         :rtype: int
         """
+
+        return a if b == 0 else self.getSum(a^b, (a & b) << 1)
