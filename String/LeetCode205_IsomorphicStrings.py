@@ -43,3 +43,8 @@ class Solution(object):
                 return False
 
         return True
+
+
+
+obj = Solution()
+print(obj.isIsomorphic2("abab","ccdd"))
