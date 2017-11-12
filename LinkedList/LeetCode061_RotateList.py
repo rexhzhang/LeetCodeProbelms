@@ -23,7 +23,7 @@ class Solution:
         :type k: int
         :rtype: ListNode
         """
-        if head is None or k is None: return "Invalid Input"
+        if head is None or k is None: return None
 
         def getLen(node):
             length = 0
@@ -33,26 +33,21 @@ class Solution:
 
             return length
 
-
         length = getLen(head)
         k = k % length
-        if k == length: return head
+        if k == 0: return head
 
-        counter = length - k
         current = head
+        counter = 0
+        while counter < length - k - 1:
+            current = current.next
+            counter += 1
 
-        while current:
-
-            while counter > 1:
-                current = current.next
-                counter -= 1
-                if counter == 1:
-                    newHead = current.next
-                    current.next = None
-
-            current = newHead
-            if current.next is None:
-                break
+        newHead = current.next
+        current.next = None
+        current = newHead
+        while current and current.next:
+            current = current.next
 
         current.next = head
 
