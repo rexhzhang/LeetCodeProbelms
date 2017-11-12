@@ -28,3 +28,10 @@ class Solution(object):
         nums = reversed(nums)
         nums[:k] = reversed(nums[:k])
         nums[k:] = reversed(nums[k:])
+
+"""
+Explaination:
+1. "I love Seattle"
+2. 'elttaeS evol I'
+3. " ".join(list(map(lambda x: x[::-1],'elttaeS evol I'.split())))
+"""

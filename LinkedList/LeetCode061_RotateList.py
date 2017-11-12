@@ -48,7 +48,17 @@ class Solution:
         current = newHead
         while current and current.next:
             current = current.next
-
         current.next = head
 
         return newHead
+
+"""
+1: from head: take length - k - 1 steps, find node A
+2. A.next becomes head
+3. tail node connects to origional head
+4. a.next node points to None
+5. return new head
+
+O(n) Time
+O(1) Space
+"""
