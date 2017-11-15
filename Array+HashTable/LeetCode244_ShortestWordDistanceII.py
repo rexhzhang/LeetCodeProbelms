@@ -12,13 +12,17 @@ Given word1 = "makes", word2 = "coding", return 1.
 Note:
 You may assume that word1 does not equal to word2, and word1 and word2 are both in the list.
 """
-
+from collections import defaultdict
 
 class WordDistance(object):
     def __init__(self, words):
         """
         :type words: List[str]
         """
+        self.words = defaultdict(list)
+        for i in range(len(words)):
+            self.words[words[i]].append(i)
+
 
     def shortest(self, word1, word2):
         """
@@ -26,6 +30,12 @@ class WordDistance(object):
         :type word2: str
         :rtype: int
         """
+        shortestDistance = float('inf')
+        for index1 in self.words[word1]:
+            for index2 in self.words[word2]:
+                shortestDistance = min(shortestDistance, abs(index1 - index2))
+
+        return shortestDistance
 
 
 
