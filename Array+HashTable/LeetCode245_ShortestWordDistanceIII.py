@@ -18,6 +18,23 @@ You may assume word1 and word2 are both in the list.
 
 
 class Solution(object):
+    def shortestWordDistance_short(self, words, word1, word2):
+        shortDistance = len(words)
+        Index1, Index2 = None, None
+        for i in range(len(words)):
+            if words[i] == word1:
+                Index1 = i
+            if words[i] == word2:
+                if word1 == word2:
+                    Index1 = Index2
+                Index2 = i
+            if Index1 != None and Index2 != None:
+
+                shortDistance = min(shortDistance, abs(Index1 - Index2))
+
+        return shortDistance
+
+
     def shortestWordDistance(self, words, word1, word2):
         """
         :type words: List[str]
@@ -26,23 +43,23 @@ class Solution(object):
         :rtype: int
         """
         shortestDistance = len(words)
-        word1Ind, word2Ind = None, None
+        Index1, Index2 = None, None
         flag = True
         areWordssame = word1 == word2
         for i in range(len(words)):
             if areWordssame:
                 if flag and words[i] == word1:
-                    word1Ind = i
+                    Index1 = i
                     flag = not flag
                 elif not flag and words[i] == word2:
-                    word2Ind = i
+                    Index2 = i
                     flag = not flag
             else:
                 if words[i] == word1:
-                    word1Ind = i
+                    Index1 = i
                 elif words[i] == word2:
-                    word2Ind = i
-            if word1Ind != None and word2Ind != None:
-                shortestDistance = min(shortestDistance, abs(word2Ind - word1Ind))
+                    Index2 = i
+            if Index1 != None and Index2 != None:
+                shortestDistance = min(shortestDistance, abs(Index2 - Index1))
 
         return shortestDistance
