@@ -12,6 +12,8 @@ Return true because "leetcode" can be segmented as "leet code".
 
 class Solution(object):
     def wordBreakBackTracking(self, s, wordDict):
+        # DP - memorization
+        # LeetCode TLE
         """
         :type s: str
         :type wordDict: List[str]
@@ -34,3 +36,19 @@ class Solution(object):
 
                 search_map[subString] = False
             return False
+
+    def wordBreakBackTrackingDP(self, s, wordDict):
+        # DP
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+        dp = [False] * len(s)
+
+        for i in range(len(s)):
+            for w in wordDict:
+                if w == s[i - len(w) + 1: i + 1] and  (d[i-len(w)] or i - len(w) == -1):
+                    d[i] = True
+
+        return d[-1]
