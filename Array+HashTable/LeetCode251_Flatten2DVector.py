@@ -27,14 +27,21 @@ class Vector2D(object):
         """
         :rtype: int
         """
-
-        return result
+        nextVar = self.arr[self.row][self.col]
+        self.col += 1
+        return nextVar
 
     def hasNext(self):
         """
         :rtype: bool
         """
+        while self.row <= len(self.arr) - 1:
+            if self.col <= len(self.arr[self.row]) - 1:
+                return True
+            self.col = 0
+            self.row += 1
 
+        return False
 
 
 # Your Vector2D object will be instantiated and called as such:
