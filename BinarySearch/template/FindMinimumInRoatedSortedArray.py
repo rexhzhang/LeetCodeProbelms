@@ -37,4 +37,4 @@ class Solution:
         if nums[start] <= nums[end]:
             return nums[start]
         else:
-            return nums[end]s
+            return nums[end]
