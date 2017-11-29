@@ -62,3 +62,19 @@ class Solution:
         helper(root)
 
 
+class SolutionII:
+    lastNode = None
+
+    def flatten(self, root):
+        # write your code here
+        if root is None:
+            return
+
+        if self.lastNode != None:
+            self.lastNode.left = None
+            self.lastNode.right = root
+
+        self.lastNode = root
+        right = root.right
+        self.flatten(root.left)
+        self.flatten(right)
