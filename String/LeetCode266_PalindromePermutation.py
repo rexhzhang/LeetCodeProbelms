@@ -12,13 +12,13 @@ class Solution(object):
         :type s: str
         :rtype: bool
         """
-        HT = {}
+        hashTable = {}
         for char in s:
-            HT[char] = HT.get(char, 0) + 1
+            hashTable[char] = hashTable.get(char, 0) + 1
 
         singleCount = 0
-        for key in HT:
-            if HT[key] % 2 != 0:
+        for key in hashTable:
+            if hashTable[key] % 2 != 0:
                 singleCount += 1
 
             if singleCount > 1:
