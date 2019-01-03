@@ -77,6 +77,35 @@ class Solution:
 
         answer = 0
         length = len(tree)
-        fruitType = ['#'] * 2
+        fruitType = [[tree[0], 0],'#', '#']
         for i in range(length):
-            fruitType[0] = []
+            #
+            if tree[i] == fruitType[0][0]:
+                fruitType[0][1] += 1
+
+                if fruitType[1] == '#':
+                    answer = max(answer, fruitType[0][1])
+                else:
+                    answer = max(answer, fruitType[0][1] + fruitType[1][1])
+
+                # fruitType[2] = [tree[i], fruitType[0][1]]
+
+            #
+            elif fruitType[1] == '#':
+                fruitType[1] = [tree[i], 1]
+                answer = max(answer, fruitType[0][1] + fruitType[1][1])
+
+                # fruitType[2] = [tree[i], 1]
+
+
+            elif tree[i] == fruitType[1][0]:
+                fruitType[1][1] += 1
+                answer = max(answer, fruitType[0][1] + fruitType[1][1])
+                # fruitType[2] = [tree[i], fruitType[1][1]]
+
+            else:
+                fruitType[0] = fruitType[1]
+                fruitType[1] = [tree[i], 1]
+                answer = max(answer, fruitType[0][1] + fruitType[1][1])
+
+        return answer
