@@ -77,7 +77,7 @@ class Solution:
 
         answer = 0
         length = len(tree)
-        fruitType = [[tree[0], 0],'#', '#']
+        fruitType = [[tree[0], 0], '#', [tree[0], 0]]
         for i in range(length):
             #
             if tree[i] == fruitType[0][0]:
@@ -88,24 +88,39 @@ class Solution:
                 else:
                     answer = max(answer, fruitType[0][1] + fruitType[1][1])
 
-                # fruitType[2] = [tree[i], fruitType[0][1]]
+                if fruitType[2][0] == tree[i]:
+                    fruitType[2][1] += 1
+                else:
+                    fruitType[2] = [tree[i], 1]
 
             #
             elif fruitType[1] == '#':
                 fruitType[1] = [tree[i], 1]
                 answer = max(answer, fruitType[0][1] + fruitType[1][1])
 
-                # fruitType[2] = [tree[i], 1]
+                if fruitType[2][0] == tree[i]:
+                    fruitType[2][1] += 1
+                else:
+                    fruitType[2] = [tree[i], 1]
 
 
             elif tree[i] == fruitType[1][0]:
                 fruitType[1][1] += 1
                 answer = max(answer, fruitType[0][1] + fruitType[1][1])
-                # fruitType[2] = [tree[i], fruitType[1][1]]
+
+                if fruitType[2][0] == tree[i]:
+                    fruitType[2][1] += 1
+                else:
+                    fruitType[2] = [tree[i], 1]
 
             else:
-                fruitType[0] = fruitType[1]
+                fruitType[0] = fruitType[2]
                 fruitType[1] = [tree[i], 1]
+                fruitType[2] = [tree[i], 1]
+
                 answer = max(answer, fruitType[0][1] + fruitType[1][1])
 
         return answer
+
+a = Solution()
+a.totalFruit([0,1,6,6,4,4,6])
