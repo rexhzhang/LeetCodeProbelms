@@ -6,11 +6,11 @@ You may assume that duplicates do not exist in the tree.
 """
 
 # Definition for a binary tree node.
-# class TreeNode(object):
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
+class TreeNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
 
 class Solution(object):
     def buildTree(self, preorder, inorder):
@@ -22,7 +22,7 @@ class Solution(object):
 
         def helper(start, end):
             node = TreeNode(preorder[start])
-            for i in range(len(preorder))
+            for i in range(len(preorder)):
                 node.left = helper()
 
             return node
