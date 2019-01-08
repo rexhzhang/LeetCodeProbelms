@@ -75,3 +75,18 @@ class Solution(object):
         helper(root)
 
         return self.result
+
+    
+    """
+        self.res = set()
+        
+        def helper(node):
+            if node is not None:
+                helper(node.left)
+                self.res.add(node.val)
+                helper(node.right)
+        
+        helper(root)
+        return len(self.res) == 1
+        
+    """
