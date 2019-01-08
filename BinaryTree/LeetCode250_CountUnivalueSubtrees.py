@@ -12,12 +12,12 @@ Given binary tree,
           5   5   5
 return 4.
 
-
 """
 
 
 # Definition for a binary tree node.
 # class TreeNode(object):
+
 #     def __init__(self, x):
 #         self.val = x
 #         self.left = None
