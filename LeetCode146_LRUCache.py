@@ -21,18 +21,57 @@ cache.get(1);       // returns -1 (not found)
 cache.get(3);       // returns 3
 cache.get(4);       // returns 4
 """
+class ListNode:
+     def __init__(self, k, v):
+         self.key = k
+         self.value = v
+         self.prev = None
+         self.next = None
+
+
 class LRUCache:
 
     def __init__(self, capacity: int):
-        pass
+        self.capacity =capacity
+        self.dic = dict()
+        self.head = ListNode(0, 0)
+        self.tail = ListNode(0, 0)
+        self.head.next = self.tail
+        self.tail.prev = self.head
         
 
     def get(self, key: int) -> int:
-        pass
+        if key in self.dic:
+            n = self.dic[key]
+            self._remove(n)
+            self._add(n)
+            return n.value   
+        
+        return -1
 
     def put(self, key: int, value: int) -> None:
-        pass
+        if key in self.dic:
+            self._remove(self.dic[key])
+        n = ListNode(key, value)
+        self._add(n)
+        self.dic[key] = n
+        if len(self.dic) > self.capacity:
+            n = self.tail.prev
+            self._remove(n)
+            self.dic.pop(n.key, None)
 
+    def _remove(self, node):
+        p = node.prev
+        n = node.next
+        p.next = n
+        n.prev = p
+    
+    def _add(self, node):
+        n = self.head.next
+        n.prev = node
+        self.head.next = node
+        node.next = n
+        node.prev = self.head
 
 # Your LRUCache object will be instantiated and called as such:
 # obj = LRUCache(capacity)

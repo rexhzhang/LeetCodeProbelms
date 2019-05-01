@@ -7,3 +7,4 @@ class Vehicle (Enum):
 
 motorCycle = Vehicle.motorcycle
 print(motorCycle)
+

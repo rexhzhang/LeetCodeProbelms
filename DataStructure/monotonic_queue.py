@@ -29,3 +29,30 @@ Follow up:
 Could you solve it in linear time?
 """
 
+from collections import deque
+
+class MaxQueue:
+    def __init__(self):
+        self._q = deque()
+    
+    def push(self, e):
+        while self._q and e > self._q[-1]: self._q.pop()
+    
+    def pop(self):
+        self._q.popleft()
+    
+    def max(self):
+        return self._q[0]
+
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        if not nums: return []
+        q = MaxQueue()
+        result = []
+        for i in range(len(nums)):
+            q.push(nums[i])
+            if i >= k-1:
+                result.append(q.max())
+                if nums[i - k + 1] == q.max(): q.pop()
+        return result
+
