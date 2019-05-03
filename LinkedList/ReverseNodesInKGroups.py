@@ -14,61 +14,54 @@ For k = 2, you should return: 2->1->4->3->5
 For k = 3, you should return: 3->2->1->4->5
 """
 
-class ListNode(object):
-    def __init__(self,x):
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, x):
         self.val = x
         self.next = None
 
-
 class Solution:
-    """
-    @param: head: a ListNode
-    @param: k: An integer
-    @return: a ListNode
-    """
-    def reverseKGroup(self, head, k):
-        # write your code here
-        dummy = ListNode(0)
-        dummy.next = head
-        head = dummy
-
+    def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
+        d = ListNode(0)
+        d.next = head
+        head = d
+        
         while True:
-            head = self.reverseK(head, k)
-            if head == None:
+            
+            head = self._reverseK(head, k)
+            if not head:
                 break
-
-        return dummy.next
-
-    # head -> n1 -> n2...nk -> nk + 1
-    # = >
-    # head -> nk -> nk - 1..n1 -> nk + 1
+        
+        return d.next
+    
+    # head -> n1 -> n2 ... nk -> nk+1
+    # head -> nk - nk-1 ... n1 -> nk + 1
     # return n1
-
-    def reverseK(self, head, k):
-        # 找到第k个node
+    def _reverseK(self, head, k):
         nk = head
-        for i in range(k):
-            if nk == None:
+        for _ in range(k):
+            if not nk:
                 return None
             nk = nk.next
-
-        if nk == None:
-            return None
-
+        
+        if not nk: return None
+        
         # Reverse
-        n1 = head.next
-        nkplus = nk.next
-
+        n1 = head.next # head is dummy
+        nk_next = nk.next
         prev = None
-        current = n1
+        cur = n1
+        
+        while cur != nk_next:
+            temp = cur.next
+            cur.next = prev
+            prev = cur
+            cur = temp
+        
 
-        while current != nkplus:
-            temp = current.next
-            current.next = prev
-            prev = current
-            current = temp
-
+        # connect
         head.next = nk
-        n1.next = nkplus
-
+        n1.next = nk_next
+        
         return n1
+        
