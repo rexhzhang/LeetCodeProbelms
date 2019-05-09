@@ -18,42 +18,39 @@ Example 2:
 Given the above grid, return 0.
 Note: The length of each dimension in the given grid does not exceed 50.
 """
+
 from collections import deque
-class Solution(object):
-    def maxAreaOfIsland(self, grid):
-        """
-        :type grid: List[List[int]]
-        :rtype: int
-        """
-        if grid is None or len(grid) == 0 or len(grid[0]) == 0:
-            return 0
-        maxArea = 0
-        row,column = len(grid), len(grid[0])
-        for y in range(row):
-            for x in range(column):
-                if grid[y][x] == 1:
-                    currentArea = self.BFS(grid, y, x, row, column)
-                    maxArea = max(currentArea, maxArea)
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        if not grid or len(grid) == 0: return 0
+        
+        m, n = len(grid), len(grid[0])
+        answer = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    currentArea = self.BFS(grid, i, j)
+                    answer = max(answer, currentArea)
+        
+        return answer
+    
+    def BFS(self, grid, x, y):
+        q = deque([])
+        q.append((x,y))
 
-        return maxArea
-
-    def BFS(self, grid, y, x, row, column):
-        queue = deque([(y,x)])
-        grid[y][x] = 0
+        dx = [1,0,0, -1]
+        dy = [0, 1, -1, 0]
         area = 1
-        while queue:
-            current = queue.popleft()
-            currentY = current[0]
-            currentX = current[1]
-            dX = [1, 0, 0, -1]
-            dY = [0, 1, -1, 0]
-            for i in range(4):
-                X = currentX + dX[i]
-                Y = currentY + dY[i]
-                if Y >= 0 and X >= 0 and Y < row and X < column and grid[Y][X] == 1:
+        grid[x][y] = 0
+        while q:
+            i, j = q.popleft()
+            for k in range(4):
+                X = i+dx[k]
+                Y = j + dy[k]
+                if X >= 0 and X < len(grid) and Y >= 0 and Y < len(grid[0]) and grid[X][Y] == 1:
+                    q.append((X, Y))
                     area += 1
-                    queue.append((Y,X))
-                    grid[Y][X] = 0
+                    grid[X][Y] = 0
 
         return area
 
