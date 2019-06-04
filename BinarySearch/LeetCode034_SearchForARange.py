@@ -13,47 +13,44 @@ return [3, 4].
 Solution: 查找两次第一次出现和最后一次出现的位置
 """
 
-class Solution(object):
-    def searchRange(self, nums, target):
-        """
-        :type nums: List[int]
-        :type target: int
-        :rtype: List[int]
-        """
-        A = nums
-        if not A or len(A) == 0:
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        if not nums:
             return [-1, -1]
-
-        start, end = 0, len(A) - 1
-
+        
+        ans = [-1, -1]
+        start, end = 0, len(nums) - 1
+        
         while start + 1 < end:
-            mid = (start + end) / 2
-            if A[mid] < target:
+            
+            mid = (start + end) // 2
+            
+            if nums[mid]< target:
+                start = mid
+            
+            else:
+                end = mid
+    
+        if nums[start] == target:
+            ans[0] = start
+        elif nums[end] == target:
+            ans[0] = end
+        
+
+        start, end = 0, len(nums) - 1
+        
+        while start + 1 < end:
+            
+            mid = (start + end) // 2
+            
+            if nums[mid] <= target:
                 start = mid
             else:
                 end = mid
-
-        if A[start] == target:
-            head = start
-        elif A[end] == target:
-            head = end
-        else:
-            head = -1
-
-        start, end = 0, len(A) - 1
-
-        while start + 1 < end:
-            mid = (start + end) / 2
-            if A[mid] <= target:
-                start = mid
-            else:
-                end = mid
-
-        if A[end] == target:
-            tail = end
-        elif A[start] == target:
-            tail = start
-        else:
-            tail = -1
-
-        return [head, tail]
+        
+        if nums[end] == target:
+            ans[1] = end
+        elif nums[start] == target:
+            ans[1] = start
+        
+        return ans

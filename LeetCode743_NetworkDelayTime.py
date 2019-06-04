@@ -1,4 +1,4 @@
-from collections import deque, defaultdict
+
 """
 There are N network nodes, labelled 1 to N.
 
@@ -14,6 +14,7 @@ K will be in the range [1, N].
 The length of times will be in the range [1, 6000].
 All edges times[i] = (u, v, w) will have 1 <= u, v <= N and 0 <= w <= 100.
 """
+from collections import deque, defaultdict
 class Solution(object):
     def networkDelayTime(self, times, N, K):
         """
@@ -40,7 +41,12 @@ class Solution(object):
                 if graph[node][0] not in visited:
                     visited.add(graph[node][0])
                     time_this_round = max(time_this_round, graph[node][1])
-                    
-
+                    next_round.append(graph[node][0])
+            
+            q = next_round
+            time += time_this_round
+        
+        return time if len(visited) == N-1 else -1
+        
 
 
