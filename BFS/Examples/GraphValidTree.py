@@ -17,28 +17,34 @@ Solution:
 条件1：刚好N-1条边 条件2：N个点连通
 """
 from collections import defaultdict, deque
-class Solution:
-    """
-    @param: n: An integer
-    @param: edges: a list of undirected edges
-    @return: true if it's a valid tree, or false
-    """
-    def validTree(self, n, edges):
-        # write your code here
-        if len(edges) != n - 1: return False
-        neighbours = defaultdict(list)
-        for u, v in edges:
-            neighbours[u].append(v)
-            neighbours[v].append(u)
 
+class Solution:
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        
+        # 一个图是树需要满足两个条件：
+        # 1. N个点只能有N-1条边
+        # 2. N 个点互相连通
+        
+        if n -1 != len(edges):
+            return False
+        
+        # 用字典表示关系
+        neighbors = defaultdict(list)
+        for u, v in edges:
+            neighbors[u].append(v)
+            neighbors[v].append(u)
+        
         visited = set()
+        visited.add(0)
         q = deque([0])
+        
         while q:
             node = q.popleft()
-            visited.add(node)
-            for neighbour in neighbours[node]:
-                if neighbour not in visited:
-                    q.append(neighbour)
-                    visited.add(neighbour)
+            
+            for neighbor in neighbors[node]:
+                if neighbor not in visited:
+                    q.append(neighbor)
+                    visited.add(neighbor)
+        
 
         return len(visited) == n

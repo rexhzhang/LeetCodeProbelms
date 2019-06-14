@@ -27,31 +27,37 @@ class Solution(object):
         :type wordList: List[str]
         :rtype: int
         """
-        dictionary = set()
+        dictionary = set([])
         for word in wordList:
             dictionary.add(word)
+        
+        q =  deque([beginWord])
+        step = 1
+        visited = set([beginWord])
+        
+        while q:
+            step += 1
+            next_round = deque([])
+            
+            while q:
+                word = q.popleft()
+            
+                for i in range(len(word)):
+                    left = word[:i]
+                    right = word[i+1:]
+                    for c in "abcdefghijklmnopqrstuvwxyz":
+                        new_word = left + c + right
 
-        queue = deque([(beginWord,1)])
+                        if new_word in dictionary and new_word == endWord:
+                            return step
 
-        while queue:
-            element = queue.popleft()
-            currentWord = element[0]
-            currentLength = element[1]
-            for i in range(len(currentWord)):
-                if currentWord == endWord:
-                    return currentLength
-
-                left = currentWord[:i]
-                middle = currentWord[i]
-                right = currentWord[i+1:]
-                for j in "abcdefghijklmnopqrstuvwxyz":
-                    if j != middle:
-                        newWord = left + j + right
-                        if newWord in dictionary:
-                            queue.append((newWord, currentLength+1))
-                            if currentLength > 1:
-                                dictionary.remove(newWord)
-
+                        elif new_word in dictionary and new_word not in visited:
+                            visited.add(new_word)
+                            next_round.append(new_word)
+                
+            
+            q = next_round
+        
         return 0
 
 test = Solution()

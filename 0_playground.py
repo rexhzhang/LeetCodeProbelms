@@ -19,5 +19,11 @@ class Solution(object):
         return ans
 
 
-s = Solution()
-s.divide(10, 3)
+import math
+def area(radius):
+    return math.pi * (radius ** 2)
+
+l = [1,2,3,4,5,6]
+x = map(area, l)
+
+print(x)
