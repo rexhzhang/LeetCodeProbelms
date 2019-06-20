@@ -48,3 +48,31 @@ class Solution(object):
             return sumOfThisPath
         else:
             return 0
+
+
+# 2019-06-20 Redo
+
+
+class Solution2(object):
+    def maxPathSum(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        self.max_sum = -float('inf')
+        
+        self.search_maxPathSum(root)
+        
+        return self.max_sum
+    
+    def search_maxPathSum(self, node):
+        
+        if not node:
+            return 0
+        
+        left = self.search_maxPathSum(node.left)
+        right = self.search_maxPathSum(node.right)
+        
+        self.max_sum = max(left + right + node.val, self.max_sum)
+
+        return max(left + node.val, right + node.val, node.val, 0)

@@ -42,13 +42,35 @@ Output: [1,null,2,null,3,null,4,null,5,null,6,null,7,null,8,null,9]
 #         self.right = None
 
 class Solution:
-    def increasingBST(self, root):
-        """
-        :type root: TreeNode
-        :rtype: TreeNode
-        """
+    def increasingBST(self, root: TreeNode) -> TreeNode:
 
+        # 考点：中序遍历 + Dummy Node
 
+        d = TreeNode(0)
+        cur = d
+
+        if not root:
+            return None
+        
+        stack = []
+        node = root
+        while node:
+            stack.append(node)
+            node = node.left
+        
+        while stack:
+            node = stack.pop()
+            cur.right = node
+            cur = cur.right
+            node.left = None
+
+            if node.right:
+                node = node.right
+                while node:
+                    stack.append(node)
+                    node = node.left
+            
+        return d.right
 
 
 

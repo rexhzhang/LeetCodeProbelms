@@ -56,10 +56,21 @@ class Solution:
 
     def connect2(self, root):
         # Iterative
-        while root and root.left:
-            next = root.left
-            while root:
-                root.left.next = root.right
-                root.right.next = root.next and root.next.left
-                root = root.next
-            root = next
+        left = root
+        
+        while left:
+            cur = left
+            
+            if not cur.left:
+                break
+            
+            while cur:
+                cur.left.next = cur.right
+                if cur.next:
+                    cur.right.next = cur.next.left    
+                cur = cur.next
+            
+            left = left.left
+        
+        return root
+            

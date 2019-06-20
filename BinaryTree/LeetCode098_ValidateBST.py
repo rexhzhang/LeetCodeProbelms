@@ -15,6 +15,8 @@ Both the left and right subtrees must also be binary search trees.
 #         self.left = None
 #         self.right = None
 
+# Recursive Solution
+
 class Solution(object):
     def isValidBST(self, root):
         """
@@ -41,3 +43,40 @@ class Solution(object):
                 return left and right and node.val > floor and node.val < ceiling
 
             return validateBST(root, floor, ceiling)
+
+
+
+# Iterative Solution
+class Solution2:
+    def isValidBST(self, root: TreeNode) -> bool:
+        
+        if not root:
+            return True
+        
+        stack = []
+        
+        node = root
+        
+        while node:
+            stack.append(node)
+            node = node.left
+        
+        last_node = stack[-1]
+        while stack:
+            node = stack.pop()
+            
+            if node.right:
+                node = node.right
+                while node:
+                    stack.append(node)
+                    node = node.left
+            
+            if stack:
+                # 此处stack[-1]可能是last_node的右子节点，也可能是last_node的parent，都不应该比last_node小
+                
+                if stack[-1].val <= last_node.val:
+                    return False
+        
+                last_node = stack[-1]
+        
+        return True

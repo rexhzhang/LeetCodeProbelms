@@ -39,4 +39,4 @@ class Solution(object):
             R = self.isBalanced2(node.right)
             if R == -1: return -1
             return max(L, R) + 1 if abs(L-R) <= 1 else -1
-        return helper(root) == -1
+        return helper(root) != -1
