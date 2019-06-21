@@ -64,3 +64,33 @@ class Solution(object):
 [5,1,5,5,5,null,5]
 return 4
 """
+
+# 2019-06-20 Redo
+
+class Solution2:
+    def countUnivalSubtrees(self, root: TreeNode) -> int:
+
+        self.subTree = 0
+        self.countSubtrees(root)
+        return self.subTree
+    
+    def countSubtrees(self, node):
+        if not node:
+            return None
+        
+        if not node.left and not node.right:
+            self.subTree += 1
+            return node.val
+        
+        left = self.countSubtrees(node.left)
+        right = self.countSubtrees(node.right)
+        
+        if left == node.val and right == node.val:
+            self.subTree += 1
+            return node.val
+        
+        if not left and right == node.val or not right and left == node.val:
+            self.subTree += 1
+            return node.val
+        
+        return '#'

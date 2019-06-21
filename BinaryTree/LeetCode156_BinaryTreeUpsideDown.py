@@ -18,29 +18,31 @@ return the root of the binary tree [4,5,2,#,#,3,1].
 
 
 # Definition for a binary tree node.
-class TreeNode(object):
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
 
-class Solution(object):
-    def upsideDownBinaryTree(self, root):
-        """
-        :type root: TreeNode
-        :rtype: TreeNode
-        """
-        def helper(p, parent):
-            if p is None: return parent
-            root = TreeNode(p.left, p)
+class Solution:
+    def upsideDownBinaryTree(self, root: TreeNode) -> TreeNode:
+        if not root:
+            return None
+        
+        return self.DFS(root)
+    
+    def DFS(self, root):
 
+        if not root.left:
+            return root
+        
+        new_root = self.DFS(root.left)
 
+        root.left.right = root
+        root.left.left = root.right
+        root.left = None
+        root.right = None
 
-
-
-
-
-
-
+        return new_root
 
 

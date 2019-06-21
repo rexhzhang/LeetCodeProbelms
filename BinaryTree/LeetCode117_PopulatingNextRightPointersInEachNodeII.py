@@ -53,3 +53,37 @@ class Solution:
                 pNode = nxtLevelNode
                 root = nxtLevelNode.next
                 nxtLevelNode.next = None
+
+
+
+# 2019-06-20 Redo
+
+class Solution2:
+    def connect(self, root: 'Node') -> 'Node':
+        # Time: O(n)
+        # Space: O(1)
+        
+        left = root
+        
+        while left:
+            
+            cur = left
+            
+            d = Node(0, None, None, None)
+            p = d
+            
+            while cur:
+                
+                if cur.left:
+                    p.next = cur.left
+                    p = cur.left
+                
+                if cur.right:
+                    p.next = cur.right
+                    p = cur.right
+                
+                cur = cur.next
+            
+            left = d.next # 因为d.next 保存的是下level的第一个点
+        
+        return root
