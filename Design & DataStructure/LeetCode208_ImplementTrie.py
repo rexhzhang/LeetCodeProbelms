@@ -5,62 +5,62 @@ Note:
 You may assume that all inputs are consist of lowercase letters a-z.
 
 """
-# 2019-06-22
-class TrieNode(object):
-    def __init__(self):
-        self.children = {}
-        self.isWord = False
 
-class Trie(object):
+class TrieNode:
+    def __init__(self):
+        self.isWord = False
+        self.children = {}
+
+class Trie:
+
     def __init__(self):
         """
         Initialize your data structure here.
         """
         self.root = TrieNode()
+        
 
-    def insert(self, word):
+    def insert(self, word: str) -> None:
         """
         Inserts a word into the trie.
-        :type word: str
-        :rtype: void
         """
-        node = self.root
-        for char in word:
-            child = node.children.get(char)
-            if child is None:
-                node.children[char] = TrieNode()
-                child = node.children[char]
-            node = child
-        node.isWord = True
+        cur = self.root
+        for c in word:
+            if c in cur.children:
+                cur = cur.children[c]
+            else:
+                cur.children[c] = TrieNode()
+                cur = cur.children[c]
+        cur.isWord = True
 
+        return
+        
 
-    def search(self, word):
+    def search(self, word: str) -> bool:
         """
         Returns if the word is in the trie.
-        :type word: str
-        :rtype: bool
         """
-        node = self.root
-        for char in word:
-            child = node.children.get(char)
-            if child is None:
-                return False
+        cur = self.root
+        for c in word:
+            if c in cur.children:
+                cur = cur.children[c]
             else:
-                node = child
-        return node.isWord
+                return False
+        
+        return cur.isWord
 
-    def startsWith(self, prefix):
+    def startsWith(self, prefix: str) -> bool:
         """
         Returns if there is any word in the trie that starts with the given prefix.
-        :type prefix: str
-        :rtype: bool
         """
-        node = self.root
-        for char in prefix:
-            child = node.children.get(char)
-            if child is None:
+        
+        cur = self.root
+        for c in prefix:
+            if c in cur.children:
+                cur = cur.children[c]
+            else:
                 return False
-            node = child
+        
         return True
 
 # Your Trie object will be instantiated and called as such:
