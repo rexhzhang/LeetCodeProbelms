@@ -38,7 +38,7 @@ class MyHashMap:
         Initialize your data structure here.
         """
         self.m = 1000
-        self.h = [None] * self.m
+        self.h = [None] * self.m                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
         
 
     def put(self, key: int, value: int) -> None:
