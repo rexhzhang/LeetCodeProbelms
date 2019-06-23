@@ -42,3 +42,31 @@ candidates = [2, 3, 6, 7]
 target = 7
 result = test.combinationSum(candidates, target)
 print(result)
+
+
+# 2019-06-23 Redo
+class Solution2:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        """
+        需要去重，因为题目要unique combinations
+        需要提前排序，因为需要依靠排序来做判断提前终止
+        每个数字可以重复利用，所以startIndex传入下一层不+1
+        """
+        result = []
+        candidates = sorted(list(set(candidates))) # 去重+排序
+        self.DFS(candidates, target, 0, [], result)
+        return result
+    
+
+    def DFS(self, candidates, target, start, combination, result):
+        if target == 0:
+            result.append(list(combination)) # deepcopy
+            return
+        
+        for i in range(start, len(candidates)):
+            if candidates[i] > target:
+                return
+            
+            combination.append(candidates[i])
+            self.DFS(candidates, target - candidates[i], i, combination, result)
+            combination.pop() # backtracking

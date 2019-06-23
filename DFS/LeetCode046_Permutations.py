@@ -39,3 +39,24 @@ class Solution(object):
 test = Solution()
 result = test.permute([1,2,3])
 print(result)
+
+
+# 2019-06-23 Redo
+
+class Solution2:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        result = []
+        self.DFS(nums, [], result)
+        return result
+    
+    def DFS(self, remaining_elements, permutation, result):
+        
+        if not remaining_elements:
+            return result.append(list(permutation))
+        
+        for i in range(len(remaining_elements)):
+            permutation.append(remaining_elements[i])
+            self.DFS(remaining_elements[:i]+remaining_elements[i+1:], permutation, result)
+            permutation.pop()
+        
+        

@@ -72,3 +72,22 @@ class Solution:
 
 obj = Solution()
 print(obj.subsets([1,2,3]))
+
+
+# 2019-06-23 Redo
+
+class Solution:
+    def DFS(self, nums, start, subset, result):
+        result.append(list(subset))
+        for i in range(start, len(nums)):
+            subset.append(nums[i])
+            self.DFS(nums, i+1, subset, result)
+            subset.pop()
+        
+
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        result = []
+        self.DFS(nums, 0, [], result)
+        return result
+
+    

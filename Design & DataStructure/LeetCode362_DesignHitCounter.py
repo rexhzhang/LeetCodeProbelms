@@ -32,32 +32,82 @@ counter.getHits(301);
 Follow up:
 What if the number of hits per second could be very large? Does your design scale?
 """
+from collections import deque
 
-class HitCounter(object):
+# 方法一： O(1) hit, O(s) getHits
+# O(s) space
+class HitCounter:
 
     def __init__(self):
         """
         Initialize your data structure here.
         """
-        
+        # 5 mins = 300 seconds
+        self.hits = [0] * 300
+        self.time = [0] * 300
 
-    def hit(self, timestamp):
+
+    def hit(self, timestamp: int) -> None:
         """
         Record a hit.
         @param timestamp - The current timestamp (in seconds granularity).
-        :type timestamp: int
-        :rtype: None
         """
+        index = timestamp % 300
+        
+        if self.time[index] != timestamp:
+            self.time[index] = timestamp
+            self.hits[index] = 1
+        else:
+            self.hits[index] += 1
         
 
-    def getHits(self, timestamp):
+    def getHits(self, timestamp: int) -> int:
         """
         Return the number of hits in the past 5 minutes.
         @param timestamp - The current timestamp (in seconds granularity).
-        :type timestamp: int
-        :rtype: int
+        """
+        total_hits = 0
+        for i in range(300):
+            if timestamp - self.time[i] < 300:
+                total_hits += self.hits[i]
+        return total_hits 
+
+# 方法2: Deque
+# O(1) hit, O(s) getHits
+# O(s) space
+class HitCounter2:
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.total_hits = 0
+        self.timeline = deque() 
+
+    def hit(self, timestamp: int) -> None:
+        """
+        Record a hit.
+        @param timestamp - The current timestamp (in seconds granularity).
+        """
+        if self.timeline and self.timeline[-1][0] == timestamp:
+            self.timeline[-1][1] += 1
+            self.total_hits += 1
+        
+        else:
+            self.timeline.append([timestamp, 1])
+            self.total_hits += 1
+
+    def getHits(self, timestamp: int) -> int:
+        """
+        Return the number of hits in the past 5 minutes.
+        @param timestamp - The current timestamp (in seconds granularity).
         """
         
+        while self.timeline and self.timeline[0][0] <= timestamp - 300:
+            hit = self.timeline.popleft()
+            self.timeline -= hit[1]
+        
+        return self.total_hits
 
 
 # Your HitCounter object will be instantiated and called as such:
